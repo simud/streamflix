@@ -1,5 +1,6 @@
 package com.tanasi.streamflix
 
+import com.google.gson.Gson
 import com.tanasi.streamflix.models.Movie
 import com.tanasi.streamflix.models.Video
 import com.tanasi.streamflix.providers.StreamingCommunityProvider
@@ -53,7 +54,6 @@ fun generateM3U8(movieTitlesOrIds: List<String>, outputFile: String) {
                 override fun unregisterOnSharedPreferenceChangeListener(listener: android.content.SharedPreferences.OnSharedPreferenceChangeListener) {}
             }
         }
-        // Implementazioni minime per altri metodi Context
         override fun getResources(): android.content.res.Resources = throw NotImplementedError()
         override fun getPackageName(): String = "com.tanasi.streamflix"
         override fun getSystemService(name: String): Any? = null
@@ -102,7 +102,8 @@ fun generateM3U8(movieTitlesOrIds: List<String>, outputFile: String) {
 }
 
 fun main() {
-    // Esempio: lista di titoli o ID di film
-    val movies = listOf("The Matrix", "Inception")
+    // Leggi la lista dei film da movies.json
+    val moviesJson = File("src/main/resources/movies.json").readText()
+    val movies = Gson().fromJson(moviesJson, Array<String>::class.java).toList()
     generateM3U8(movies, "movies.m3u8")
 }
