@@ -21,23 +21,20 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Set up Gradle
-        uses: gradle/gradle-build-action@v3
+      - name: Set up Gradle (raccomandato)
+        uses: gradle/actions/setup-gradle@v3
 
-      - name: Install dependencies
-        run: |
-          cd app
-          ./gradlew build
+      - name: Build progetto (modulo app)
+        run: ./gradlew :app:build
 
-      - name: Run SkyStreaming scraper
+      - name: Esegui SkyStreaming scraper
         env:
           GITHUB_WORKSPACE: ${{ github.workspace }}
         run: |
-          cd app
-          ./gradlew run
-          mv movies.m3u8 ../movies.m3u8
+          ./gradlew :app:run
+          mv app/movies.m3u8 movies.m3u8
 
-      - name: Commit and push updated M3U8 file
+      - name: Commit e push del file M3U8 aggiornato
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
