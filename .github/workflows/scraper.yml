@@ -1,9 +1,9 @@
 name: Scraper
 
 on:
-  workflow_dispatch:  # Permette l'esecuzione manuale
+  workflow_dispatch:
   schedule:
-    - cron: '*/15 * * * *'  # Esegue ogni 15 minuti
+    - cron: '*/15 * * * *'
 
 jobs:
   scrape:
@@ -26,6 +26,10 @@ jobs:
 
       - name: Rendi gradlew eseguibile
         run: chmod +x ./gradlew
+
+      - name: Crea local.properties
+        run: |
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
 
       - name: Build progetto (modulo app)
         run: ./gradlew :app:build
