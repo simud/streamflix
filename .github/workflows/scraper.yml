@@ -24,6 +24,9 @@ jobs:
       - name: Set up Gradle (raccomandato)
         uses: gradle/actions/setup-gradle@v3
 
+      - name: Rendi gradlew eseguibile
+        run: chmod +x ./gradlew
+
       - name: Build progetto (modulo app)
         run: ./gradlew :app:build
 
